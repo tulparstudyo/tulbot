@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Trading Bot - Rapor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Crypto Trading Bot</h1>
+            <div class="status-indicator">
+                <span id="status-dot" class="status-dot offline"></span>
+                <span id="status-text">Bağlanıyor...</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Bot Kontrolü -->
+            <div class="card">
+                <h2>🎮 Bot Kontrolü</h2>
+                <div class="control-buttons">
+                    <button id="start-btn" class="btn btn-success btn-small">Başlat</button>
+                    <button id="stop-btn" class="btn btn-danger btn-small">Durdur</button>
+                    <button id="analyze-btn" class="btn btn-info btn-small">Manuel Analiz</button>
+                    <button id="test-notification-btn" class="btn btn-warning btn-small">Test Bildirimi</button>
+                </div>
+                <div class="chart-image">
+                    <img src="https://www.binance.tr/proxy/bin/kline/BTCUSDT.svg" alt="BTC_TRY" class="binance-chart">
+                </div>
+            </div>
+
+            <!-- Genel Bilgiler -->
+            <div class="card">
+                <h2>📊 Genel Bilgiler</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Sembol:</label>
+                        <span id="symbol">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Mevcut Fiyat:</label>
+                        <span id="current-price">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Çalışma Süresi:</label>
+                        <span id="uptime">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Son Güncelleme:</label>
+                        <span id="last-update">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Alım İzni:</label>
+                        <span id="buy-permission" class="permission-status">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Satım İzni:</label>
+                        <span id="sell-permission" class="permission-status">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teknik Analiz -->
+            <div class="card">
+                <h2>🔍 Teknik Analiz</h2>
+                <div id="analysis-container">
+                    <div class="analysis-item">
+                        <label>RSI:</label>
+                        <span id="rsi-value">-</span>
+                        <div class="progress-bar">
+                            <div id="rsi-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <label>Fisher Transform:</label>
+                        <span id="fisher-value">-</span>
+                        <div class="progress-bar fisher">
+                            <div id="fisher-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <label>Volume Score:</label>
+                        <span id="volume-value">-</span>
+                        <div class="progress-bar">
+                            <div id="volume-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puanlama Sistemi -->
+            <div class="card">
+                <h2>⭐ Puanlama Sistemi</h2>
+                <div class="scoring-container">
+                    <div class="score-item">
+                        <h3>Alım Puanı</h3>
+                        <div class="score-display">
+                            <span id="buy-score" class="score-number">0</span>
+                            <span class="score-max">/10</span>
+                        </div>
+                        <div id="buy-stars" class="stars"></div>
+                    </div>
+                    <div class="score-item">
+                        <h3>Satım Puanı</h3>
+                        <div class="score-display">
+                            <span id="sell-score" class="score-number">0</span>
+                            <span class="score-max">/10</span>
+                        </div>
+                        <div id="sell-stars" class="stars"></div>
+                    </div>
+                    <div class="recommendation">
+                        <h3>Öneri</h3>
+                        <div id="recommendation" class="recommendation-text">HOLD</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hesap Bilgileri -->
+            <div class="card">
+                <h2>💰 Hesap Bilgileri</h2>
+                <div class="account-info">
+                    <div class="balance-item">
+                        <label id="quote-asset-label">USDT Bakiye:</label>
+                        <span id="quote-balance">-</span>
+                    </div>
+                    <div class="balance-item">
+                        <label id="base-asset-label">BTC Bakiye:</label>
+                        <span id="base-balance">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Günlük İstatistikler -->
+            <div class="card">
+                <h2>📈 Günlük İstatistikler</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label>Toplam İşlem:</label>
+                        <span id="total-trades">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Alım İşlemi:</label>
+                        <span id="buy-trades">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Satım İşlemi:</label>
+                        <span id="sell-trades">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Toplam Kar/Zarar:</label>
+                        <span id="total-profit">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Son İşlemler - Full Width -->
+        <div class="trades-section">
+            <div class="card card-full-width">
+                <h2>📋 Son İşlemler</h2>
+                <div id="trades-container">
+                    <div class="no-data">Henüz işlem yok</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
