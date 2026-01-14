@@ -130,6 +130,7 @@ header h1 {
     border-radius: 8px;
     opacity: 0.9;
     transition: opacity 0.3s ease;
+    width: 100px;
 }
 
 .binance-chart:hover {
